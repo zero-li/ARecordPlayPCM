@@ -208,15 +208,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String time = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        File outFile = new File(dir, RECORDING_FILE_PREFIX + time + RECORDING_FILE_EXT);
+        final File outFile = new File(dir, RECORDING_FILE_PREFIX + time + RECORDING_FILE_EXT);
 
         int minBufferSize = AudioRecord.getMinBufferSize(RECORD_SAMPLE_RATE, CHANNEL_CONFIG_IN, AUDIO_ENCODING);
         if (minBufferSize <= 0) {
             setStatus("录音配置不被支持");
             return;
         }
-        int bufferSize = Math.max(minBufferSize, RECORD_SAMPLE_RATE / 2);
-        if ((bufferSize & 1) != 0) bufferSize++;
+        int calculatedBufferSize = Math.max(minBufferSize, RECORD_SAMPLE_RATE / 2);
+        if ((calculatedBufferSize & 1) != 0) calculatedBufferSize++;
+        final int bufferSize = calculatedBufferSize;
 
         audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, RECORD_SAMPLE_RATE, CHANNEL_CONFIG_IN, AUDIO_ENCODING, bufferSize);
         if (audioRecord.getState() != AudioRecord.STATE_INITIALIZED) {
@@ -339,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
         if (state != State.IDLE) {
             return;
         }
-        File file = getLatestRecording();
+        final File file = getLatestRecording();
         if (file == null || !file.exists()) {
             setStatus("没有可播放的录音");
             return;
@@ -354,8 +355,9 @@ public class MainActivity extends AppCompatActivity {
             setStatus("播放配置不被支持");
             return;
         }
-        int bufferSize = Math.max(minBufferSize, OUTPUT_SAMPLE_RATE / 2);
-        if ((bufferSize & 1) != 0) bufferSize++;
+        int calculatedBufferSize = Math.max(minBufferSize, OUTPUT_SAMPLE_RATE / 2);
+        if ((calculatedBufferSize & 1) != 0) calculatedBufferSize++;
+        final int bufferSize = calculatedBufferSize;
 
         AudioTrack track = new AudioTrack(
                 new AudioAttributes.Builder()
