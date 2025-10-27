@@ -111,7 +111,15 @@ public class MainActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-
+                if (state == State.RECORDING) {
+                    stopRecording();
+                } else if (state == State.PLAYING || pcmPlayer.isPlaying()) {
+                    pcmPlayer.stop();
+                    state = State.IDLE;
+                    updateUi();
+                } else {
+                    finish();
+                }
             }
         });
     }
