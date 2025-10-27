@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
             recordingError = failure;
             isRecording = false;
             safeStopAudioRecord();
-            runOnUiThread(() -> finalizeRecording(file, failure));
+            runOnUiThread(() -> finalizeRecording(file, recordingError));
         }
     }
 
@@ -422,7 +422,7 @@ public class MainActivity extends AppCompatActivity {
             playbackCompleted = completed && failure == null;
             safeStopAudioTrack();
             isPlaying = false;
-            runOnUiThread(() -> finalizePlayback(failure, playbackCompleted));
+            runOnUiThread(() -> finalizePlayback(playbackError, playbackCompleted));
         }
     }
 
