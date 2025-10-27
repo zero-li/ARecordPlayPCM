@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="screen_padding">16dp</dimen>
+    <dimen name="menu_text_size">20sp</dimen>
+    <dimen name="status_text_size">16sp</dimen>
+    <dimen name="item_padding_v">14dp</dimen>
+    <dimen name="item_spacing">12dp</dimen>
+</resources>
